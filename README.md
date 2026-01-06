@@ -457,9 +457,9 @@ Nếu sử dụng code này trong nghiên cứu, vui lòng cite:
 ```bibtex
 @software{vietnamese_recsys_2024,
   title = {Intelligent E-commerce Product Recommendation System for Vietnamese Market},
-  author = {Your Name},
-  year = {2024},
-  url = {https://github.com/your-repo}
+  author = {Qhuy204},
+  year = {2025},
+  url = {https://github.com/Qhuy204}
 }
 ```
 
@@ -467,9 +467,9 @@ Nếu sử dụng code này trong nghiên cứu, vui lòng cite:
 
 ## 📧 Contact & Support
 
-- **Author:** Your Name
-- **Email:** your.email@example.com
-- **Issues:** https://github.com/your-repo/issues
+- **Author:** Quoc Huy Truong
+- **Email:** truongquochuy234@gmail.com
+- **Issues:** [https://github.com/your-repo/issues](https://github.com/Qhuy204/TikRecommend/issues)
 
 ---
 
