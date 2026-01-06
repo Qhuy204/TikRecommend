@@ -31,6 +31,7 @@ help:
 	@echo "  make demo-coldstart  - Demo cold-start"
 	@echo ""
 	@echo "Utilities:"
+	@echo "  make check       - Check all files"
 	@echo "  make clean       - Clean generated files"
 	@echo "  make test        - Run tests"
 	@echo "  make all         - Full pipeline + training"
@@ -73,6 +74,11 @@ clean-data:
 
 preprocess:
 	@echo "Extracting features..."
+	@if [ ! -f data/clean/tiki_dataset_clean.jsonl ]; then \
+		echo "❌ Error: data/clean/tiki_dataset_clean.jsonl not found!"; \
+		echo "Run: make clean-data first"; \
+		exit 1; \
+	fi
 	python recommendation_system.py \
 		--mode preprocess \
 		--clean_jsonl data/clean/tiki_dataset_clean.jsonl
@@ -80,13 +86,30 @@ preprocess:
 
 interactions:
 	@echo "Extracting user-item interactions..."
+	@if [ ! -f data/clean/tiki_dataset_clean.jsonl ]; then \
+		echo "❌ Error: data/clean/tiki_dataset_clean.jsonl not found!"; \
+		echo "Run: make clean-data first"; \
+		exit 1; \
+	fi
 	python create_interactions.py \
 		--input data/clean/tiki_dataset_clean.jsonl \
 		--output data/processed/interactions.csv
 	@echo "✓ Interactions extracted!"
 
 pipeline: clean-data preprocess interactions
-	@echo "✓ Full data pipeline complete!"
+	@echo ""
+	@echo "=================================="
+	@echo "✓ FULL DATA PIPELINE COMPLETE!"
+	@echo "=================================="
+	@echo ""
+	@echo "Files created:"
+	@echo "  ✓ data/clean/tiki_dataset_clean.jsonl"
+	@echo "  ✓ data/processed/item_features.csv"
+	@echo "  ✓ data/processed/ranking_features.csv"
+	@echo "  ✓ data/processed/interactions.csv"
+	@echo ""
+	@echo "Next step: make train-all"
+	@echo ""
 
 # Quick preprocessing with sample (for testing)
 preprocess-sample:
@@ -102,6 +125,13 @@ preprocess-sample:
 
 train-two-tower:
 	@echo "Training Two-Tower Model..."
+	@python check_files.py || true
+	@if [ ! -f data/processed/item_features.csv ] || [ ! -f data/processed/interactions.csv ]; then \
+		echo ""; \
+		echo "❌ Missing required files!"; \
+		echo "Run: make pipeline first"; \
+		exit 1; \
+	fi
 	python training_scripts.py \
 		--model two_tower \
 		--epochs 10 \
@@ -110,6 +140,13 @@ train-two-tower:
 
 train-mmoe:
 	@echo "Training MMoE Model..."
+	@python check_files.py || true
+	@if [ ! -f data/processed/ranking_features.csv ]; then \
+		echo ""; \
+		echo "❌ Missing required files!"; \
+		echo "Run: make pipeline first"; \
+		exit 1; \
+	fi
 	python training_scripts.py \
 		--model mmoe \
 		--epochs 20 \
@@ -151,6 +188,10 @@ demo-coldstart:
 # ============================================================================
 # UTILITIES
 # ============================================================================
+
+check:
+	@echo "Checking files..."
+	@python check_files.py
 
 clean:
 	@echo "Cleaning generated files..."

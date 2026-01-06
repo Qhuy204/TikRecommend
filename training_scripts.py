@@ -169,6 +169,23 @@ def train_two_tower_model(item_csv='data/processed/item_features.csv',
     print("TRAINING TWO-TOWER MODEL (RETRIEVAL)")
     print("="*80)
     
+    # Check if files exist
+    from pathlib import Path
+    
+    if not Path(item_csv).exists():
+        print(f"\n❌ Error: {item_csv} not found!")
+        print("\nPlease run preprocessing first:")
+        print("  make preprocess")
+        print("  Or: python recommendation_system.py --mode preprocess")
+        return
+    
+    if not Path(interactions_csv).exists():
+        print(f"\n❌ Error: {interactions_csv} not found!")
+        print("\nPlease extract interactions first:")
+        print("  make interactions")
+        print("  Or: python create_interactions.py --input data/clean/tiki_dataset_clean.jsonl")
+        return
+    
     # Load data
     print("\n[1] Loading data...")
     item_df = pd.read_csv(item_csv)
@@ -371,6 +388,16 @@ def train_mmoe_model(ranking_csv='data/processed/ranking_features.csv',
     print("\n" + "="*80)
     print("TRAINING MMoE MODEL (RANKING)")
     print("="*80)
+    
+    # Check if file exists
+    from pathlib import Path
+    
+    if not Path(ranking_csv).exists():
+        print(f"\n❌ Error: {ranking_csv} not found!")
+        print("\nPlease run preprocessing first:")
+        print("  make preprocess")
+        print("  Or: python recommendation_system.py --mode preprocess")
+        return
     
     # Load data
     print("\n[1] Loading data...")
