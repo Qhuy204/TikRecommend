@@ -440,9 +440,19 @@ class TwoTowerDataset(Dataset):
     def __getitem__(self, idx):
         user_id, item_id = self.interactions[idx]
         
-        # Get item text
+        # 1. Lấy dữ liệu và ép kiểu về string để tránh lỗi NaN hoặc None
+        # Nếu item_features lưu dưới dạng dict {id: "text"}, dùng .get(item_id, "")
         item_text = self.item_features.get(item_id, "")
         
+        # 2. Xử lý trường hợp item_features lưu dạng dict phức tạp {id: {'text': '...'}}
+        if isinstance(item_text, dict):
+            item_text = item_text.get('text', "")
+            
+        # 3. Ép kiểu về chuỗi và xử lý nếu chuỗi rỗng
+        item_text = str(item_text).strip()
+        if not item_text or item_text == "nan":
+            item_text = "Sản phẩm không có mô tả"
+
         # Tokenize
         encoding = self.tokenizer(
             item_text,
