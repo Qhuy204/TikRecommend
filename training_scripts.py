@@ -115,7 +115,12 @@ def prepare_two_tower_data(item_df, interactions_df):
         train_dataset, val_dataset, tokenizer
     """
     from transformers import AutoTokenizer
-    
+    from sklearn.preprocessing import LabelEncoder
+
+    user_encoder = LabelEncoder()
+    # Chuyển đổi toàn bộ user_id về dải số liên tục bắt đầu từ 0
+    interactions_df['user_id'] = user_encoder.fit_transform(interactions_df['user_id'])
+        
     # Load PhoBERT tokenizer
     tokenizer = AutoTokenizer.from_pretrained('vinai/phobert-base')
     
@@ -203,10 +208,10 @@ def train_two_tower_model(item_csv='data/processed/item_features.csv',
     
     # Initialize model
     print("\n[3] Initializing model...")
-    num_users = interactions_df['user_id'].nunique()
-    num_categories = item_df['category'].nunique()
-    num_brands = item_df['brand_id'].nunique()
-    
+    num_users = int(interactions_df['user_id'].max() + 1)
+    num_categories = int(item_df['category_encoded'].max() + 1)
+    num_brands = int(item_df['brand_encoded'].max() + 1)
+        
     from recommendation_system import TwoTowerModel
     model = TwoTowerModel(
         num_users=num_users,
