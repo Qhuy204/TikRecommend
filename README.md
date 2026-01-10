@@ -127,7 +127,7 @@ python evaluate.py
 
 ---
 
-## 📈 Dataset Statistics
+## 📈 Dataset
 
 | Metric | Value |
 |--------|-------|
@@ -135,7 +135,10 @@ python evaluate.py
 | Items (filtered) | 19,855 |
 | Total Items | 123,016 |
 | Interactions | 581,357 |
-| Source | Tiki E-commerce |
+
+**Source**: Crawled from [tiki.vn](https://tiki.vn)
+
+**Dataset**: [Qhuy204/TikDataset](https://huggingface.co/datasets/Qhuy204/TikDataset) on Hugging Face
 
 ---
 
