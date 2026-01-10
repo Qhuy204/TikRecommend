@@ -1,0 +1,57 @@
+# ===============================
+# Data files (DO NOT COMMIT)
+# ===============================
+*.csv
+*.tsv
+*.json
+# *.jsonl
+*.pkl
+*.pickle
+*.parquet
+*.feather
+*.npz
+*.npy
+
+# ===============================
+# Model & embeddings
+# ===============================
+*.pt
+*.pth
+*.ckpt
+*.bin
+*.onnx
+
+cache/
+embeddings/
+checkpoints/
+models/
+data/
+
+# ===============================
+# Logs & outputs
+# ===============================
+logs/
+outputs/
+runs/
+wandb/
+
+# ===============================
+# Python
+# ===============================
+__pycache__/
+*.py[cod]
+*.egg-info/
+.env
+.venv
+venv/
+
+# ===============================
+# Jupyter
+# ===============================
+.ipynb_checkpoints/
+
+# ===============================
+# OS
+# ===============================
+.DS_Store
+Thumbs.db
