@@ -25,10 +25,8 @@ Multi-model recommendation system for Vietnamese E-commerce (Tiki dataset).
 
 | Alpha | HR@10 | NDCG@10 |
 |-------|-------|---------|
-| 0.00 (TF-IDF) | 9.37% | 5.41% |
 | 0.50 | 24.13% | 14.29% |
 | **0.80** | **29.80%** | **17.70%** |
-| 1.00 (LightGCN) | 29.10% | 16.91% |
 
 ### LightGCN
 
