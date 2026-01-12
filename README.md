@@ -62,6 +62,7 @@ Multi-model recommendation system for Vietnamese E-commerce (Tiki dataset).
 
 ```
 recommendation-system/
+├── CrawlFunction/              # Data crawling from Tiki
 ├── data/
 │   ├── raw/                    # Raw Tiki dataset
 │   └── processed/              # Preprocessed data
@@ -162,6 +163,29 @@ python evaluate.py
 **Dataset**: [Qhuy204/TikDataset](https://huggingface.co/datasets/Qhuy204/TikDataset) on Hugging Face
 
 ---
+
+## 🕷️ Data Crawling
+
+Crawl data from Tiki API:
+
+```bash
+cd CrawlFunction
+
+# Crawl product data by categories
+python crawl.py
+
+# Crawl product images
+python crawl_image.py
+
+# Extract features from crawled data
+python extract_features.py
+```
+
+**Files:**
+- `crawl.py` - Crawl products from Tiki API
+- `crawl_image.py` - Download product images
+- `extract_features.py` - Extract product features
+- `tiki_leaf_categories.csv` - Category list for crawling
 
 ## 📖 References
 
