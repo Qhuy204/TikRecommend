@@ -67,13 +67,36 @@ recommendation-system/
 ├── data/
 │   ├── raw/                    # Raw Tiki dataset
 │   └── processed/              # Preprocessed data
+├── demo/                       # Gradio Web UI
 ├── LightGCN/                   # Graph Convolution Network
 ├── SASRec/                     # Self-Attentive Sequential
 ├── CL4SRec/                    # Contrastive Learning for SR
 ├── ContentBased_TFIDF/         # TF-IDF text similarity
 ├── ContentBased_PhoBERT/       # Vietnamese BERT embeddings
-└── Hybrid_LightGCN_TFIDF/      # ⭐ Hybrid CF + CB
+└── Hybrid_LightGCN_TFIDF/      # Hybrid CF + CB
 ```
+
+---
+
+## 🚀 Web Demo
+
+Interactive Gradio web interface:
+
+```bash
+# Install Gradio
+pip install gradio
+
+# Run demo
+cd demo
+python app.py
+```
+
+Open http://localhost:7860 in browser.
+
+**Features:**
+- User Recommendations (with model selection)
+- Similar Items (content-based)
+- Compare Methods (LightGCN vs TF-IDF vs Hybrid)
 
 ---
 
