@@ -299,13 +299,17 @@ class RecommenderDemo:
         try:
             user_id = int(user_id)
         except:
-            return "", "", ""
+            return "", "", "", ""
         
         if user_id not in self.data.user2idx:
-            return "<p>User not found</p>", "<p>User not found</p>", "<p>User not found</p>"
+            msg = "<p>User not found</p>"
+            return msg, msg, msg, msg
         
         user_idx = self.data.user2idx[user_id]
         user_history = self.data.user_pos_items.get(user_idx, set())
+        
+        # Format user history
+        history_html = self.format_history(user_idx)
         
         results = {}
         for alpha, name in [(1.0, "LightGCN"), (0.0, "TF-IDF"), (0.8, "Hybrid")]:
@@ -313,7 +317,7 @@ class RecommenderDemo:
             recs = self.hybrid.recommend_with_details(user_idx, user_history, top_k=int(top_k))
             results[name] = self.format_recommendations(recs)
         
-        return results["LightGCN"], results["TF-IDF"], results["Hybrid"]
+        return history_html, results["LightGCN"], results["TF-IDF"], results["Hybrid"]
     
     def random_user(self):
         return str(random.choice(list(self.data.user2idx.keys())))
@@ -428,22 +432,27 @@ def create_app():
                 compare_topk = gr.Slider(3, 8, value=5, step=1, label="Top-K")
                 compare_btn = gr.Button("⚖️ Compare All Methods", variant="primary")
             
+            # User interaction history
+            gr.Markdown("### 📜 User Interaction History")
+            compare_history_output = gr.HTML()
+            
+            gr.Markdown("### 📊 Recommendations by Method")
             with gr.Row():
                 with gr.Column():
-                    gr.Markdown("### LightGCN (α=1.0)")
+                    gr.Markdown("#### LightGCN (α=1.0)")
                     lgcn_output = gr.HTML()
                 with gr.Column():
-                    gr.Markdown("### TF-IDF (α=0.0)")
+                    gr.Markdown("#### TF-IDF (α=0.0)")
                     tfidf_output = gr.HTML()
                 with gr.Column():
-                    gr.Markdown("### Hybrid (α=0.8)")
+                    gr.Markdown("#### Hybrid (α=0.8)")
                     hybrid_output = gr.HTML()
             
             compare_random.click(demo_rec.random_user, outputs=compare_user)
             compare_btn.click(
                 demo_rec.compare_methods,
                 inputs=[compare_user, compare_topk],
-                outputs=[lgcn_output, tfidf_output, hybrid_output]
+                outputs=[compare_history_output, lgcn_output, tfidf_output, hybrid_output]
             )
         
         # Footer
